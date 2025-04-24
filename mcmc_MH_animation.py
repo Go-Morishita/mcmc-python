@@ -14,7 +14,7 @@ def get_save_interval(i):
 
 samples = []
 all_samples = []
-num_steps = 1000000
+num_steps = 10000000
 x = 0.5 # 初期値
 proposal_std = 0.1 # ジャンプ幅
 

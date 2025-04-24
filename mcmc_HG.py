@@ -1,6 +1,5 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
 
 # 目標分布
 def target_dist(x, y):
@@ -36,10 +35,14 @@ marginal_x = Z.sum(axis=0) * dy      # ∫ p(x,y) dy
 marginal_y = Z.sum(axis=1) * dx      # ∫ p(x,y) dx
 
 # 正規化
-area_x = np.trapz(marginal_x, x_vals)
-area_y = np.trapz(marginal_y, y_vals)
+area_x = np.trapezoid(marginal_x, x_vals)
+area_y = np.trapezoid(marginal_y, y_vals)
 marginal_x_norm = marginal_x / area_x
 marginal_y_norm = marginal_y / area_y
+
+# 最大値を取得
+max_marginal_x = np.max(marginal_x_norm)
+max_marginal_y = np.max(marginal_y_norm)
 
 # --- プロット ---
 fig = plt.figure(figsize=(10, 7))
@@ -57,15 +60,9 @@ ax.set_zlim(0, max_pdf)
 Z0 = np.zeros_like(Z)
 ax.plot_surface(
     X, Y, Z0,
-    color='lightgray', alpha=0.5,
+    alpha=0.0,
     rstride=20, cstride=20,
     edgecolor='none'
-)
-
-# 2) 実際の PDF サーフェス
-ax.plot_surface(
-    X, Y, Z,
-    cmap='viridis', alpha=0.7, edgecolor='none'
 )
 
 # 3) サンプル点 (z=0 上にプロット)
@@ -81,14 +78,14 @@ y_min, y_max = ax.get_ylim()
 # 4) p(x) を y = 奥の壁 (y_max) 面に
 wall_y = np.full_like(x_vals, y_max)
 ax.plot(
-    x_vals, wall_y, marginal_x_norm,
+    x_vals, wall_y, marginal_x_norm / max_marginal_x * max_pdf,
     color='blue', lw=2, label='p(x) (normalized)'
 )
 
 # 5) p(y) を x = 手前の壁 (x_min) 面に
 wall_x = np.full_like(y_vals, x_min)
 ax.plot(
-    wall_x, y_vals, marginal_y_norm,
+    wall_x, y_vals, marginal_y_norm / max_marginal_y * max_pdf,
     color='green', lw=2, label='p(y) (normalized)'
 )
 
@@ -96,7 +93,7 @@ ax.plot(
 ax.set_xlabel("x")
 ax.set_ylabel("y")
 ax.set_zlabel("Density")
-ax.set_title("3D: 定義域を底面とした PDF と 周辺分布")
+ax.set_title("Hesting and Gibbs Sampling")
 ax.legend(loc='upper left')
 
 plt.tight_layout()
