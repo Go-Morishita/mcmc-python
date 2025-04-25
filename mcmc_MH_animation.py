@@ -7,13 +7,11 @@ import math
 def target_dist(x):
     return np.sin(2 * np.pi * x) + 1
 
-
 def get_save_interval(i):
     if i <= 1000:
         return 100
     exponent = math.floor(math.log10(max(i, 1)))
     return 10 ** (exponent - 1)
-
 
 samples = []
 all_samples = []
@@ -60,8 +58,6 @@ ax.set_ylabel("Density")
 ax.legend()
 
 # フレーム更新関数
-
-
 def update(frame):
     global hist
     if hist:
@@ -70,7 +66,6 @@ def update(frame):
     hist = ax.hist(all_samples[frame], bins=40,
                    density=True, alpha=0.6, color='C0')[2]
     ax.set_title(f"Step: {frame * 100}")
-
 
 # アニメーション作成
 ani = FuncAnimation(fig, update, frames=len(
