@@ -8,6 +8,7 @@
 # 結構いい感じできたが, 細かい部分がテキトウ
 # 若干2つ目の山が低い気がする, 少し確認すべき
 # 次のステップはtichiを導入するか, MWGでやる
+# ☆chainsを理解して実装すべき. 多分ここがtaichiと繋がてくる, 先輩のコードを見るべき
 
 import numpy as np
 import matplotlib.pyplot as plt
