@@ -6,7 +6,8 @@
 
 # 2024年5月1日
 # 結構いい感じできたが, 細かい部分がテキトウ
-# 若干2つ目の山が低い気がする
+# 若干2つ目の山が低い気がする, 少し確認すべき
+# 次のステップはtichiを導入するか, MWGでやる
 
 import numpy as np
 import matplotlib.pyplot as plt
